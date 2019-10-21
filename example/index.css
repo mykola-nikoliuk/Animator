@@ -1,0 +1,26 @@
+html, body {
+  margin: 0;
+}
+
+.wrapper {
+  position: relative;
+  margin: 16px;
+  border: 1px solid grey;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.title {
+  top: -11px;
+  left: 8px;
+  padding: 0 8px;
+  position: absolute;
+  background-color: white;
+  text-transform: uppercase;
+}
+
+.square {
+  width: 64px;
+  height: 64px;
+  background-color: red;
+}

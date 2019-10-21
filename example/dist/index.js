@@ -3313,7 +3313,7 @@ class Animation_Animation {
         const subTarget = subPath.length ? get_default()(this.target, keyTokens.join('.'), null) : this.target;
 
         if (subTarget) {
-          updateFunction(subTarget, subKey, keyframeRange);
+          subTarget[subKey] = updateFunction(keyframeRange);
         } else {
           throw new Error(`Animation:_animationUpdate() : can't resolve path "${key}"`);
         }
@@ -3431,31 +3431,30 @@ class Animation_Animation {
   }
 
 }
-function UPDATE_NUMBER(target, field, {
+function UPDATE_NUMBER({
   from,
   to,
   progress
 }) {
   switch (progress) {
     case 0:
-      target[field] = from;
-      break;
+      return from;
 
     case 1:
-      target[field] = to;
-      break;
+      return to;
 
     default:
-      target[field] = (to - from) * progress + from;
+      return (to - from) * progress + from;
   }
 }
-function UPDATE_BOOL(target, field, {
-  from
+function UPDATE_BOOL({
+  from,
+  to
 }) {
-  target[field] = from;
+  return progress < 1 ? from : to;
 }
 function UPDATE_PATTERN(pattern) {
-  return (target, field, {
+  return ({
     from,
     to,
     progress
@@ -3485,15 +3484,17 @@ function UPDATE_PATTERN(pattern) {
     each_default()(res, (value, index) => {
       updatedPattern = updatedPattern.replace(`{${index}}`, value);
     });
-    target[field] = updatedPattern;
+    return updatedPattern;
   };
 }
+const createModificator = (update, modificator) => (...params) => modificator(update(...params));
 // CONCATENATED MODULE: ./src/index.js
 /* concated harmony reexport ENUMS */__webpack_require__.d(__webpack_exports__, "ENUMS", function() { return ENUMS; });
 /* concated harmony reexport Animation */__webpack_require__.d(__webpack_exports__, "Animation", function() { return Animation_Animation; });
 /* concated harmony reexport UPDATE_NUMBER */__webpack_require__.d(__webpack_exports__, "UPDATE_NUMBER", function() { return UPDATE_NUMBER; });
 /* concated harmony reexport UPDATE_BOOL */__webpack_require__.d(__webpack_exports__, "UPDATE_BOOL", function() { return UPDATE_BOOL; });
 /* concated harmony reexport UPDATE_PATTERN */__webpack_require__.d(__webpack_exports__, "UPDATE_PATTERN", function() { return UPDATE_PATTERN; });
+/* concated harmony reexport createModificator */__webpack_require__.d(__webpack_exports__, "createModificator", function() { return createModificator; });
 
 
 /***/ })

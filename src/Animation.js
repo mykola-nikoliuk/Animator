@@ -229,7 +229,7 @@ export class Animation {
         const subPath = keyTokens.join('.');
         const subTarget = subPath.length ? get(this.target, keyTokens.join('.'), null) : this.target;
         if (subTarget) {
-          updateFunction(subTarget, subKey, keyframeRange);
+          subTarget[subKey] = updateFunction(keyframeRange);
         } else {
           throw new Error(`Animation:_animationUpdate() : can't resolve path "${key}"`);
         }
@@ -343,27 +343,23 @@ export class Animation {
   }
 }
 
-export function UPDATE_NUMBER(target, field, {from, to, progress}) {
+export function UPDATE_NUMBER({from, to, progress}) {
   switch (progress) {
     case 0:
-      target[field] = from;
-      break;
-
+      return from;
     case 1:
-      target[field] = to;
-      break;
-
+      return to;
     default:
-      target[field] = (to - from) * progress + from;
+      return (to - from) * progress + from;
   }
 }
 
-export function UPDATE_BOOL(target, field, {from}) {
-  target[field] = from;
+export function UPDATE_BOOL({from, to}) {
+  return progress < 1 ? from : to;
 }
 
 export function UPDATE_PATTERN(pattern) {
-  return (target, field, {from, to, progress}) => {
+  return ({from, to, progress}) => {
     let updatedPattern = pattern;
     let res;
     switch (progress) {
@@ -387,6 +383,8 @@ export function UPDATE_PATTERN(pattern) {
     each(res, (value, index) => {
       updatedPattern = updatedPattern.replace(`{${index}}`, value);
     });
-    target[field] = updatedPattern;
+    return updatedPattern;
   };
 }
+
+export const createModificator = (update, modificator) => (...params) => modificator(update(...params));
