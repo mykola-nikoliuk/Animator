@@ -1,6 +1,5 @@
 (() => {
   const div = createExample('advanced update');
-  div.style.position = 'relative';
 
   const { Animation, ENUMS, createModificator } = Animator;
 
