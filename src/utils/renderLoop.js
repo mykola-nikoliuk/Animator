@@ -1,6 +1,6 @@
-import {RenderLoopScope} from 'utils/renderLoopScope';
-import EventEmitter from 'utils/eventEmmiter';
 import each from 'lodash/each';
+import {RenderLoopScope} from './renderLoopScope';
+import EventEmitter from './eventEmmiter';
 
 let requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
   window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;

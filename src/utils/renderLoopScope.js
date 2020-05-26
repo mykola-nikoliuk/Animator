@@ -1,5 +1,5 @@
-import EventEmitter from 'utils/eventEmmiter';
 import get from 'lodash/get';
+import EventEmitter from './eventEmmiter';
 
 export class RenderLoopScope extends EventEmitter {
 

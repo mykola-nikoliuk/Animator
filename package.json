@@ -1,10 +1,12 @@
 {
-  "name": "animation",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "m-animator",
+  "version": "1.0.1",
+  "description": "Animator made to make easy work with javascript animations",
+  "main": "dist/index.js",
+  "module": "index.js",
   "scripts": {
-    "build": "webpack && copyfiles ./dist/* examples",
+    "build": "webpack",
+    "build-examples": "webpack --config webpack.examples.js",
     "server": "http-server ./examples -p 3000"
   },
   "author": "Mykola Nikoliuk",
@@ -19,8 +21,25 @@
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.4",
     "copyfiles": "^2.1.1",
-    "http-server": "^0.11.1",
+    "http-server": "^0.12.3",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9"
-  }
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nick-nikoliuk/Animator.git"
+  },
+  "keywords": [
+    "js",
+    "animator",
+    "animation",
+    "keyframes"
+  ],
+  "bugs": {
+    "url": "https://github.com/nick-nikoliuk/Animator/issues"
+  },
+  "homepage": "https://github.com/nick-nikoliuk/Animator#readme"
 }

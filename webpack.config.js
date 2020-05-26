@@ -1,27 +1,21 @@
 const webpack = require('webpack');
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 
-const DIST_FOLDER_NAME = 'dist';
-const EXAMPLES_FOLDER_NAME = 'examples';
-
-const distPath = path.join(__dirname, DIST_FOLDER_NAME);
-const examplesDistPath = path.join(__dirname, EXAMPLES_FOLDER_NAME, DIST_FOLDER_NAME);
-
-module.exports = ({ library = 'Animator', filename = 'index.js' } = {}) => ({
+module.exports = ({ libraryTarget = 'umd', disFolder = 'dist' } = {}) => ({
   resolve: {
     modules: ['node_modules', 'src'],
   },
   mode: 'production',
   devtool: 'source-map', // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
-  entry: path.resolve(__dirname, './src/index.js'),
+  entry: path.resolve(__dirname, './index.js'),
   target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
   output: {
-    path: distPath, // Note: Physical files are only output by the production build task `npm run build`.
+    path: path.join(__dirname, disFolder),
     publicPath: '/',
-    filename,
-    library
+    filename: 'index.js',
+    library: 'Animator',
+    libraryTarget,
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -31,9 +25,6 @@ module.exports = ({ library = 'Animator', filename = 'index.js' } = {}) => ({
       'VERSION': '"development"',
     }),
     new webpack.NoEmitOnErrorsPlugin(),
-    new CopyPlugin([
-      { from: distPath, to: examplesDistPath },
-    ]),
   ],
   optimization: {
     minimize: false
